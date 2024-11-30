@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="5;url={% url 'verify' %}">
+    <title>Код отправлен</title>
+</head>
+<body>
+    <h1>{{ message }}</h1>
+    <p>Если перенаправление не произошло, <a href="{% url 'verify' %}">нажмите здесь</a>.</p>
+</body>
+</html>

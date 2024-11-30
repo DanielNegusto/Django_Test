@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль пользователя</title>
+</head>
+<body>
+    <h1>Профиль пользователя</h1>
+    <p>Номер телефона: {{ user.phone_number }}</p>
+    <p>Инвайт-код: {{ user.invite_code }}</p>
+    <p>Статус активации: {{ user.activated_invite_code|yesno:"Активирован,Не активирован" }}</p>
+    <h2>Пользователи, которые актировали ваш код:</h2>
+    {% if user.activated_users %}
+        <ul>
+            {% for activated_user in user.activated_users %}
+                <li>{{ activated_user }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Пользователи еще не активировали ваш код.</p>
+    {% endif %}
+
+    <h2>Введите инвайт-код</h2>
+    <form method="post" action="{% url 'profile' user.phone_number %}">
+        {% csrf_token %}
+        <input type="hidden" name="phone_number" value="{{ user.phone_number }}">
+        <input type="text" name="invite_code" required placeholder="Инвайт-код">
+        <button type="submit">Активировать код</button>
+    </form>
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+</body>
+</html>
